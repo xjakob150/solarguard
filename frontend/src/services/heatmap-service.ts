@@ -5,6 +5,10 @@ import { PR } from '../shared/constants/production-rules';
 import { gridPoints } from '../shared/utils/slovenia';
 import { Grid } from './dtos/grid';
 
+interface OpenMeteoHourlyResponse {
+  hourly: { time: string[]; global_tilted_irradiance: (number | null)[] };
+}
+
 @Injectable({ providedIn: 'root' })
 export class HeatmapService {
   private readonly http = inject(HttpClient);
@@ -19,7 +23,7 @@ export class HeatmapService {
     const url =
       `https://api.open-meteo.com/v1/forecast?latitude=${points.map((p) => p[0])}&longitude=${points.map((p) => p[1])}` +
       `&hourly=global_tilted_irradiance&tilt=30&azimuth=0&past_days=1&forecast_days=3&timezone=UTC`;
-    const obs = this.http.get<any[]>(url).pipe(
+    const obs = this.http.get<OpenMeteoHourlyResponse[]>(url).pipe(
       map((r): Grid => ({
         points,
         times: r[0].hourly.time.map((t: string) => Date.parse(t + 'Z')),

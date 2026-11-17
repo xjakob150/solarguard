@@ -16,6 +16,7 @@ import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
 import { Dialog } from '../dialog/dialog';
 import { Pager } from '../pager/pager';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- generična vrstica poljubnega entitetnega tipa, oblika ni znana vnaprej
 type Row = Record<string, any>;
 
 @Component({

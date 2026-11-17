@@ -84,6 +84,7 @@
   <app-dialog [title]="formTitle()" [dismissOnBackdrop]="false" (dismissed)="closeForm()">
     <form (ngSubmit)="save()">
       @for (field of fields(); track field.key) {
+        <!-- eslint-disable-next-line @angular-eslint/template/label-has-associated-control -- control je znotraj @switch, linter ne zazna povezave -->
         <label>
           {{ field.label }}
           @switch (field.type) {

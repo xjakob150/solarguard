@@ -2,9 +2,12 @@ import { PageConfig } from '../models/page-config';
 import { warrantyStatus } from '../utils/warranty';
 import { ROLES } from './roles';
 
-const installationRef = { path: 'installations', label: (r: any) => r.name };
-const technicianRef = { path: 'technicians', label: (r: any) => r.name };
-const deviceRef = { path: 'devices', label: (r: any) => `${r.manufacturer} ${r.model} (${r.serialNumber})` };
+const installationRef = { path: 'installations', label: (r: Record<string, unknown>) => r['name'] as string };
+const technicianRef = { path: 'technicians', label: (r: Record<string, unknown>) => r['name'] as string };
+const deviceRef = {
+  path: 'devices',
+  label: (r: Record<string, unknown>) => `${r['manufacturer']} ${r['model']} (${r['serialNumber']})`,
+};
 
 export const INSTALLATIONS: PageConfig = {
   title: 'Sistemi',
