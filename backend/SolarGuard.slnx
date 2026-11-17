@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SolarGuard.Api.Tests/SolarGuard.Api.Tests.csproj" />
+  <Project Path="SolarGuard.Api/SolarGuard.Api.csproj" />
+</Solution>
