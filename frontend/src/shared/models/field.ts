@@ -7,5 +7,5 @@ export interface Field {
   adminOnly?: boolean;
   hiddenFor?: string[];
   badge?: 'warranty';
-  ref?: { path: string; label: (r: any) => string };
+  ref?: { path: string; label: (r: Record<string, unknown>) => string };
 }

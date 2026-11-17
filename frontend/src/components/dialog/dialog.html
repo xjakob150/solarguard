@@ -1,3 +1,4 @@
+<!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -- klik na ozadje za zapiranje, Escape zapre dialog prek (cancel) -->
 <dialog #dialog [class.wide]="wide()" (cancel)="cancel($event)" (click)="backdrop($event)" [attr.aria-label]="title()">
   <div class="dialog-head">
     <h2>{{ title() }}</h2>
