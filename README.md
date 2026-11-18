@@ -1,6 +1,10 @@
 # Solar Guard
 
+[![CI/CD](https://github.com/xjakob150/solarguard/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/xjakob150/solarguard/actions/workflows/ci-cd.yml)
+
 Platforma za nadzor proizvodnje sončnih elektrarn v gospodinjstvih. Primerja dejansko proizvodnjo s pričakovano (glede na lokacijo, sezono in vreme), zazna odstopanja (okvara, umazanija, senca) in samodejno ustvari alarm ter servisni nalog. Uporabniki so lastniki sistemov, serviserji in administratorji.
+
+Nameščena aplikacija: **https://solarguard-1.onrender.com** (backend API: https://solarguard-jaa0.onrender.com/swagger)
 
 ## Tehnologije
 
@@ -11,6 +15,17 @@ Platforma za nadzor proizvodnje sončnih elektrarn v gospodinjstvih. Primerja de
 - Vreme: Open-Meteo (sevanje in oblačnost za pričakovano proizvodnjo in napoved)
 - E-pošta: SMTP prek MailKit, lokalno Mailpit
 - Lokalni razvoj: Docker, Docker Compose
+
+## CI/CD
+
+Ob vsakem pull requestu in pushu na `main` se sproži `.github/workflows/ci-cd.yml`:
+
+1. **Lint** – preveri slog kode: ESLint za frontend (`ng lint`), `dotnet format --verify-no-changes` za backend.
+2. **Build** – zgradi frontend (`ng build`) in backend (`dotnet publish`), odvisnosti so predpomnjene (npm, NuGet), rezultat se naloži kot artefakt.
+3. **Test** – požene teste frontenda (`ng test`, 85 testov) in backenda (`dotnet test`, 22 testov poslovne logike), poročilo o pokritosti kode se naloži kot artefakt.
+4. **Deploy** – samo ob pushu na `main` in samo, če so prejšnji trije jobi uspešni: sproži namestitev na Render (backend kot Web Service, frontend kot Static Site z rewrite pravilom `/api/*` na backend).
+
+Veja `main` je zaščitena – `Lint`, `Build` in `Test` morajo uspeti, preden je pull request mogoče združiti.
 
 ## Lokalni zagon
 
@@ -96,7 +111,12 @@ cd frontend
 npx ng test --watch=false
 ```
 
-Backend nima testnega projekta; pravila (`backend/SolarGuard.Api/Services/*Rules.cs`) so preizkušena ročno prek API-ja in Mailpita.
+Backend: enotski testi pravil poslovne logike (`backend/SolarGuard.Api/Services/*Rules.cs`) so v `backend/SolarGuard.Api.Tests`.
+
+```
+cd backend
+dotnet test SolarGuard.Api.Tests/SolarGuard.Api.Tests.csproj
+```
 
 ### Razvoj brez Dockerja za API in splet
 
@@ -132,4 +152,5 @@ docker compose -f docker-compose.pi.yml up -d --build
 - [04 Arhitektura in tehnološki sklad](docs/04-arhitektura-in-tehnoloski-sklad.md)
 - [05 Uporabniške zgodbe](docs/05-uporabniske-zgodbe.md)
 - [06 Wireframes](docs/06-wireframes.md)
+- [07 Pregled projekta](docs/07-pregled-projekta.md)
 - [Arhitekturne odločitve (ADR)](docs/adr/)
