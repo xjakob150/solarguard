@@ -2,6 +2,7 @@
 
 # Compiled output
 dist/
+publish/
 tmp/
 out-tsc/
 /bazel-out
@@ -33,7 +34,7 @@ yarn-error.log
 .angular/
 .sass-cache/
 /connect.lock
-/coverage
+coverage/
 /libpeerconnection.log
 testem.log
 /typings
@@ -46,6 +47,7 @@ Thumbs.db
 # .NET
 bin/
 obj/
+TestResults/
 .vs/
 *.user
 
