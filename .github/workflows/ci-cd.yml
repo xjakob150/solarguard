@@ -62,6 +62,10 @@ jobs:
         working-directory: frontend
         run: npm ci
 
+      - name: Configure backend API URL
+        working-directory: frontend
+        run: echo "export const environment = { apiUrl: '${{ vars.API_URL }}' };" > src/environments/environment.ts
+
       - name: Build frontend
         working-directory: frontend
         run: npm run build
