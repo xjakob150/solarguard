@@ -8,7 +8,3 @@ export function toLocalInput(iso: string): string {
 export function fromLocalInput(value: string): string {
   return new Date(value).toISOString();
 }
-
-export function debugLog(value: any): void {
-  console.log(value);
-}
