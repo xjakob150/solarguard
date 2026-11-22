@@ -21,9 +21,9 @@ Nameščena aplikacija: **https://solarguard-1.onrender.com** (backend API: http
 Ob vsakem pull requestu in pushu na `main` se sproži `.github/workflows/ci-cd.yml`:
 
 1. **Lint** – preveri slog kode: ESLint za frontend (`ng lint`), `dotnet format --verify-no-changes` za backend.
-2. **Build** – zgradi frontend (`ng build`) in backend (`dotnet publish`), odvisnosti so predpomnjene (npm, NuGet), rezultat se naloži kot artefakt.
+2. **Build** – zgradi backend (`dotnet publish`) in frontend (`ng build`), pri čemer se v `environment.ts` vgradi URL backenda iz repo spremenljivke `API_URL`, da frontend kliče backend prek absolutnega naslova (`apiUrlInterceptor`). Odvisnosti so predpomnjene (npm, NuGet), rezultat se naloži kot artefakt.
 3. **Test** – požene teste frontenda (`ng test`, 85 testov) in backenda (`dotnet test`, 22 testov poslovne logike), poročilo o pokritosti kode se naloži kot artefakt.
-4. **Deploy** – samo ob pushu na `main` in samo, če so prejšnji trije jobi uspešni: sproži namestitev na Render (backend kot Web Service, frontend kot Static Site z rewrite pravilom `/api/*` na backend).
+4. **Deploy** – samo ob pushu na `main` in samo, če so prejšnji trije jobi uspešni: sproži namestitev na Render (backend kot Web Service, frontend kot Static Site).
 
 Veja `main` je zaščitena – `Lint`, `Build` in `Test` morajo uspeti, preden je pull request mogoče združiti.
 
