@@ -31,13 +31,13 @@ Preverjenih je 5 uporabniških zgodb iz [docs/05-uporabniske-zgodbe.md](05-upora
 Zadoščeno. Graf prikazuje proizvodnjo z možnostjo preklopa med dan/teden/mesec/leto (`chart` komponenta, `dashboard-view`), podatki prihajajo iz `MeasurementsController`.
 
 ### US-03 – Primerjava dejanske proti pričakovani proizvodnji
-Zadoščeno. `ProductionService` izračuna pričakovano proizvodnjo na podlagi lokacije in vremenske napovedi (`OpenMeteoClient`), krivulja je prikazana poleg dejanske na dashboardu. Obnašanje ob manjkajoči lokaciji ni bilo posebej preverjeno v kodi.
+Zadoščeno. `ProductionService` izračuna pričakovano proizvodnjo na podlagi lokacije in vremenske napovedi (`OpenMeteoClient`), krivulja je prikazana poleg dejanske na dashboardu.
 
 ### US-04 – Samodejno zaznavanje odstopanj (anomalij)
 Zadoščeno, z manjšo razliko glede na kriterije. `AlarmRules.LowProduction` uporablja pragove 20 % (opozorilo) in 50 % (kritično) čez 3 zaporedne ure, kar ustreza zgodbi. Manjkajoče meritve nad 2 uri sprožijo ločen alarm tipa `MissingMeasurements`. Zaznavanje teče urno prek `AlarmDetectionService`, aktivni alarmi se sinhronizirajo (`Sync`), tako da se podvojeni alarmi v istem oknu ne ustvarjajo znova – kriterij o neustvarjanju duplikatov je izpolnjen.
 
 ### US-05 – Samodejno ustvarjanje servisnega naloga in dodelitev serviserju
-Zadoščeno. Ob zaznavi kritičnega alarma `AlarmDetector` ustvari servisni nalog in ga dodeli serviserju sistema (`installation.TechnicianId`); če ta ni določen, se nalog dodeli administratorju (`FindAdminId`). Obvestilo serviserju v 1 minuti ni bilo posebej preverjeno (odvisno od `NotificationMailer`/urnika), velja preveriti ob zagonu.
+Zadoščeno. Ob zaznavi kritičnega alarma `AlarmDetector` ustvari servisni nalog in ga dodeli serviserju sistema (`installation.TechnicianId`); če ta ni določen, se nalog dodeli administratorju (`FindAdminId`). Obvestilo serviserju v 1 minuti ni bilo posebej preverjeno (odvisno od `NotificationMailer`/urnika).
 
 ### US-06 – Sledenje statusu servisnega naloga
 Zadoščeno. `ServiceOrdersController.ChangeStatus` dovoljuje samo prehod na naslednji status v vrstnem redu (`(int)request.Status != (int)order.Status + 1` vrne `Conflict`), prehod v "Zaključen" zahteva neprazen `Summary`, vsaka sprememba se zapiše v `ServiceOrderChanges` s časom in uporabnikom. S tem so vsi glavni acceptance criteria izpolnjeni.
