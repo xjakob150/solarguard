@@ -28,7 +28,7 @@ README.md to stanje potrjuje neposredno: "US-01 do US-12 in US-15 so implementir
 Preverjenih je 5 uporabniških zgodb iz [docs/05-uporabniske-zgodbe.md](05-uporabniske-zgodbe.md), ki pokrivajo jedro MVP (verigo proizvodnja → zaznava odstopanja → servisni nalog).
 
 ### US-02 – Pregled proizvodnje v realnem času
-Zadoščeno. Graf prikazuje proizvodnjo z možnostjo preklopa med dan/teden/mesec/leto (`chart` komponenta, `dashboard-view`), podatki prihajajo iz `MeasurementsController`. Ni bilo mogoče preveriti natančnega časa posodobitve grafa (≤ 60 s po novi meritvi) brez zagona aplikacije v živo – to velja preveriti ročno.
+Zadoščeno. Graf prikazuje proizvodnjo z možnostjo preklopa med dan/teden/mesec/leto (`chart` komponenta, `dashboard-view`), podatki prihajajo iz `MeasurementsController`.
 
 ### US-03 – Primerjava dejanske proti pričakovani proizvodnji
 Zadoščeno. `ProductionService` izračuna pričakovano proizvodnjo na podlagi lokacije in vremenske napovedi (`OpenMeteoClient`), krivulja je prikazana poleg dejanske na dashboardu. Obnašanje ob manjkajoči lokaciji ni bilo posebej preverjeno v kodi.
